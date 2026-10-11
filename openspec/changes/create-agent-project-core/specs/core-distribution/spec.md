@@ -20,9 +20,13 @@ The exporter SHALL support Codex, Claude, or both profiles. Each export SHALL in
 - **WHEN** both profiles are exported and the source checkout is unavailable
 - **THEN** all exported guidance references resolve locally and both tools have their native entrypoints and skills
 
-#### Scenario: Single profile
+#### Scenario: Codex-only profile
 - **WHEN** only Codex is selected
 - **THEN** the output includes the shared guidance and Codex adapter without requiring Claude configuration
+
+#### Scenario: Claude-only profile
+- **WHEN** only Claude is selected
+- **THEN** the output includes the shared guidance and Claude adapter without requiring Codex configuration
 
 ### Requirement: Respect project configuration
 Exports SHALL accept explicit project paths, verification commands, and optional native model overrides. Shared defaults SHALL contain no application-specific stack, product, deployment, or credential assumptions. Missing required configuration and unsupported profiles SHALL be rejected with actionable errors before output is written.
@@ -34,6 +38,21 @@ Exports SHALL accept explicit project paths, verification commands, and optional
 #### Scenario: Invalid configuration
 - **WHEN** a required project document path or verification command is absent
 - **THEN** export fails before writing output and identifies the missing input
+
+### Requirement: Maintain explicit native model profiles
+The core SHALL provide centrally maintained role-to-model defaults for both tools, independent of shared workflow instructions. Projects SHALL be able to override native models. Profile documentation SHALL distinguish provider-resolved aliases from pinned IDs; exports SHALL record requested settings, and runtime evidence SHALL identify resolved models or disclose when unavailable.
+
+#### Scenario: Default roles for either tool
+- **WHEN** a project exports either tool profile without model overrides
+- **THEN** that profile supplies explicit planning/review and implementation/QA model recommendations rather than leaving one tool's defaults unspecified
+
+#### Scenario: New or renamed model
+- **WHEN** a maintained default is replaced with a newly supported model
+- **THEN** the new mapping is checked and behaviorally evaluated before publication in a new core version, and existing exports retain their recorded requested settings until explicitly updated
+
+#### Scenario: Alias or provider substitution
+- **WHEN** a native client resolves an alias differently or substitutes another model
+- **THEN** the delivery evidence reports the actual model or states that it could not be verified, without claiming the requested model ran merely because it appeared in configuration
 
 ### Requirement: Preserve destinations and produce reproducible exports
 Export SHALL write only into a new or empty output directory, reject a nonempty destination without changing it, and produce the same file content for the same source version, configuration, and selected profiles. Recorded identity SHALL distinguish the core source version from tool/model settings.

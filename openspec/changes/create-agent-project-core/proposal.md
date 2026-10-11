@@ -7,7 +7,8 @@ Starting another personal project currently means recreating agent instructions 
 ## What Changes
 
 - Maintain stack-independent workflow and engineering guidance once, with thin Codex and Claude entrypoints.
-- Provide reusable delivery, review, and QA skills, plus native role adapters. Codex starts with Sol for planning/review and Luna for bounded implementation/QA; Claude model selection remains separately configurable.
+- Provide reusable delivery, review, and QA skills with equally supported Codex and Claude profiles. Initial role mappings are Sol for planning/review and Luna for bounded implementation/QA in Codex, and Opus for planning/review and Sonnet for implementation/QA in Claude. Each project can override its native model settings.
+- Maintain native model defaults centrally, separately from workflow policy. Document alias versus pinned-ID behavior and publish verified default changes in a new core version without silently upgrading existing exports.
 - Route substantial behavior changes through OpenSpec planning and human acceptance; handle understood local fixes directly with proportionate checks.
 - Prioritize classical/Detroit unit tests with real collaborators, concrete reuse discovery, independent acceptance-based QA, and at most two unsuccessful correction cycles before escalation or a blocker report.
 - Export a selected tool profile into an empty directory with a recorded core version and explicit project configuration. Generated adapters must not require a live checkout of this repository.
