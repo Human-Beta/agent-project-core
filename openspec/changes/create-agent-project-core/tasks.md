@@ -2,7 +2,7 @@
 
 ## 1. Canonical guidance and reusable skills
 
-- [ ] 1.1 Add focused workflow, engineering, and verification guidance covering routing, reuse discovery, classical unit tests, independence, bounded fixes, and acceptance reports; verify each agent-delivery requirement has an identified owner and no Movie Match stack policy is imported.
+- [ ] 1.1 Add focused workflow, engineering, and verification guidance covering routing, reuse discovery, classical unit tests, independence, bounded fixes, and acceptance reports; verify each agent-delivery requirement has an identified owner and no application-specific stack policy is imported.
 - [ ] 1.2 Add deliver-change, review-change, and verify-change skills with narrow descriptions, discoverable policy references, and explicit planning/apply boundaries; validate frontmatter and references, and document invocation examples beside the usage instructions.
 - [ ] 1.3 Add canonical implementer, reviewer, and QA role contracts with bounded handoffs and missing-capability reporting; inspect realistic handoff fixtures to verify reviewers receive requirements and raw artifacts without the implementer's conclusions.
 
@@ -23,10 +23,10 @@
 - [ ] 4.1 Add isolated request/fixture cases for all routing paths, concrete reuse, an omitted failure scenario, failed correction cycles, and unavailable delegation; document the evaluation procedure and check fixtures do not reveal expected conclusions to the evaluating session.
 - [ ] 4.2 Run native Codex evaluation and harmless discovery/delegation smoke checks; record client version, observed routes, artifacts, checks, review/QA independence, and acceptance boundaries, correcting guidance only for demonstrated failures.
 - [ ] 4.3 Run equivalent native Claude evaluation and smoke checks and record its actual model settings; verify both profiles follow the shared behavior, leaving this task incomplete if native access is unavailable rather than substituting structural validation.
-- [ ] 4.4 Run pnpm verify and review the complete export/evaluation evidence against both capability specs; confirm README/usage accurately describe demonstrated behavior, incomplete gates, and deferred WF work.
+- [ ] 4.4 Run pnpm verify and review the complete export/evaluation evidence against both capability specs; confirm README/usage accurately describe demonstrated behavior, incomplete gates, and deferred work.
 
 ## Workflow follow-up
 
 - Publish verified implementation changes through a PR to main and complete independent review and owner acceptance using the delivered evidence.
-- Keep Movie Match's WF-02 roadmap status and owning PR/artifact links accurate without applying WF-06 to that application.
+- Keep this repository's documentation and change status accurate; consuming projects track their own adoption.
 - Archive only after implementation, required checks, independent gates, and acceptance pass; synchronize the accepted capability specs and validate archived completion.

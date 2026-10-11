@@ -1,12 +1,14 @@
 # agent-project-core
 
-Shared agent guidance and tool adapters for personal projects.
+A reusable, stack-independent foundation for AI-assisted development across projects.
 
-WF-02 is in planning. This bootstrap provides a pinned OpenSpec CLI; the reusable core is not implemented yet.
+The core will provide shared agent rules, a change delivery workflow, reusable skills, and native adapters for Codex and Claude. Stack-specific project templates can include a versioned copy of the core and supply their own architecture, verification, and deployment settings.
 
-Start with the [WF-02 proposal](openspec/changes/create-agent-project-core/proposal.md), then the [design](openspec/changes/create-agent-project-core/design.md), [acceptance scenarios](openspec/changes/create-agent-project-core/specs/), and [implementation checklist](openspec/changes/create-agent-project-core/tasks.md).
+## Status
 
-The agreed scope comes from [Movie Match workflow roadmap](https://github.com/Human-Beta/movie-match/blob/main/docs/workflow-roadmap.md). Stack templates, update automation, and Movie Match adoption are separate follow-up tasks.
+The initial core is in planning. The repository currently provides a pinned OpenSpec CLI; the reusable guidance, adapters, and exporter are not implemented yet.
+
+See the [proposal](openspec/changes/create-agent-project-core/proposal.md), [design](openspec/changes/create-agent-project-core/design.md), [acceptance scenarios](openspec/changes/create-agent-project-core/specs/), and [implementation checklist](openspec/changes/create-agent-project-core/tasks.md).
 
 ## Development
 

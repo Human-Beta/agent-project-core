@@ -1,9 +1,9 @@
 schema: spec-driven
 context: |
   Language: English. Write all artifacts in English.
-  agent-project-core is a standalone, stack-independent repository for WF-02 from the Movie Match workflow roadmap.
-  WF-02 owns shared guidance, reusable skills, native Codex/Claude adapters, and a bounded way to export them for future templates.
-  Stack templates (WF-03/04), automated update PRs (WF-05), Movie Match adoption (WF-06/07), and real deployment (WF-08) remain out of scope.
+  agent-project-core is a standalone, stack-independent foundation for agent-assisted development across projects.
+  This repository owns shared guidance, reusable skills, native Codex/Claude adapters, and a bounded way to export them for project templates.
+  The initial core change excludes stack templates, automated update PRs, adoption in existing applications, and real deployment.
   This bootstrap has no reusable core implementation or accepted capability specs yet.
   Use the pinned local CLI through pnpm exec openspec. Run pnpm verify before publishing a planning batch.
 rules:
@@ -11,6 +11,6 @@ rules:
     - Separate the repository bootstrap from the proposed reusable core; do not claim planned behavior exists.
   design:
     - Ground tool adapters in official documentation and keep native syntax separate from canonical workflow guidance.
-    - Prefer minimal reusable responsibilities and avoid importing Movie Match stack-specific rules.
+    - Prefer minimal reusable responsibilities and keep application-specific stack rules out of the shared core.
   tasks:
     - Include concrete validation with implementation tasks; publication, acceptance, and archive are untracked follow-up gates.

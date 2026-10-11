@@ -4,7 +4,7 @@
 
 See proposal.md for motivation and the two delta specs for acceptance behavior. The new repository contains only README.md, maintenance AGENTS.md, package.json, pnpm-lock.yaml, and openspec/config.yaml. There are no accepted specs or runtime modules to reuse here.
 
-Discovery used Movie Match's docs/workflow-roadmap.md, docs/openspec.md, openspec/config.yaml, package.json, and generated .agents/skills/openspec-* instructions. Reuse its pinned CLI and artifact ownership pattern, not its application architecture or human-diff gate. The maintenance AGENTS.md in this repository is distinct from exported project guidance.
+Discovery inspected the local README.md, AGENTS.md, openspec/config.yaml, package.json, and pinned OpenSpec CLI, together with upstream integration instructions and the official native tool documentation linked below. Planning and accepted requirements are owned by this repository. The maintenance AGENTS.md is distinct from exported project guidance.
 
 The change crosses canonical policy, skill packaging, native adapters, and export tooling, so an explicit design is necessary.
 
@@ -66,9 +66,9 @@ Use `pnpm core:export -- --output <empty-directory> --tools codex,claude --confi
 
 Project configuration supplies repository-relative paths for scope/architecture documents and review guidance, the verification command, and optional per-tool model overrides. Validate paths as relative and contained, reject unknown profiles and incomplete inputs before writes, and render guidance references consistently. The configured project verification command is written as guidance, never executed by export. Support commands appropriate to another stack instead of assuming pnpm verify in every application.
 
-Validate everything in memory before creating output. Reject a nonempty destination; reject an output nested inside canonical sources; prevent path traversal/symlink escapes. If output writing fails, remove only files created by this invocation and leave preexisting directories intact. Existing repository installation and update merging are deferred to WF-05.
+Validate everything in memory before creating output. Reject a nonempty destination; reject an output nested inside canonical sources; prevent path traversal/symlink escapes. If output writing fails, remove only files created by this invocation and leave preexisting directories intact. Existing repository installation and update merging are outside the initial core change.
 
-Alternative: a general project generator or updater. Rejected because WF-02 only needs to deliver its own reusable files to future stack templates.
+Alternative: a general project generator or updater. Rejected because the initial core only needs to deliver its own reusable files to future stack templates.
 
 ### Verification separates structure from agent behavior
 
@@ -76,18 +76,18 @@ Use Node's test runner for exporter behavior with temporary directories and real
 
 Add evaluation fixtures for a feature, local bug, text correction, unclear report, active change, unused existing helper, omitted failure scenario, two failed correction cycles, and unavailable delegation. An isolated native session gets the request and raw fixture, not the expected conclusion. Record actual routes, artifacts, checks, and gates in an evidence report. Unit tests checking policy wording cannot substitute for those sessions.
 
-Native Codex and Claude smoke runs demonstrate discovery and delegation with a harmless fixture. If either tool/account is unavailable, retain the gate as incomplete with exact instructions for running it later. Do not mark WF-02 complete on structural checks alone. No evaluation deploys, messages another chat, or modifies a live app.
+Native Codex and Claude smoke runs demonstrate discovery and delegation with a harmless fixture. If either tool/account is unavailable, retain the gate as incomplete with exact instructions for running it later. Do not mark the core change complete on structural checks alone. No evaluation deploys, messages another chat, or modifies a live app.
 
 ## Risks / Trade-offs
 
 - Instructions influence agents without guaranteeing behavior → evaluate decisions and report missing evidence; improve narrowly after observed failures.
 - Native configuration changes over time → link official documentation, validate syntax, and record the client versions used for smoke runs.
-- Generated copies can drift if edited downstream → record source version and provenance; automated refresh remains WF-05.
+- Generated copies can drift if edited downstream → record source version and provenance; automated refresh is separate follow-up work.
 - Default Claude inheritance may cost more than a bounded model → document native overrides without guessing the owner's work account availability.
 - Independent review adds overhead → keep bounded handoffs, targeted context, and at most two unsuccessful correction cycles.
 
 ## Migration Plan
 
-Implement the core on the selected short-lived branch, verify exports in disposable fixtures, publish the implementation PR, and present behavioral evidence for acceptance. Only after those gates pass should the change be archived and accepted requirements synchronized. Update the Movie Match roadmap with the owning artifact/PR link; do not change Movie Match's operative agent workflow here.
+Implement the core on the selected short-lived branch, verify exports in disposable fixtures, publish the implementation PR, and present behavioral evidence for acceptance. Only after those gates pass should the change be archived and accepted requirements synchronized. Keep this repository's README and change artifacts accurate; application adoption is tracked by each consuming project.
 
 No existing project is migrated. Rollback is reverting the core PR or discarding a disposable export. Future templates choose a recorded core version in their own tasks.
