@@ -1,0 +1,12 @@
+{
+  "role": "qa",
+  "requirements": [
+    "18 is eligible; 17 is ineligible; negative input is rejected."
+  ],
+  "runnableArtifacts": [
+    "eligibility.mjs",
+    "eligibility.test.mjs"
+  ],
+  "verificationCommand": "node --test",
+  "scope": "Eligibility only"
+}
