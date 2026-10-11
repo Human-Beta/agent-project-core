@@ -4,6 +4,8 @@ Shared agent guidance and tool adapters for personal projects.
 
 WF-02 is in planning. This bootstrap provides a pinned OpenSpec CLI; the reusable core is not implemented yet.
 
+Start with the [WF-02 proposal](openspec/changes/create-agent-project-core/proposal.md), then the [design](openspec/changes/create-agent-project-core/design.md), [acceptance scenarios](openspec/changes/create-agent-project-core/specs/), and [implementation checklist](openspec/changes/create-agent-project-core/tasks.md).
+
 The agreed scope comes from [Movie Match workflow roadmap](https://github.com/Human-Beta/movie-match/blob/main/docs/workflow-roadmap.md). Stack templates, update automation, and Movie Match adoption are separate follow-up tasks.
 
 ## Development
