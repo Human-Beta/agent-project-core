@@ -11,7 +11,7 @@
 - [ ] 2.1 Add the central native role-to-model mapping for both tools and document alias/pinning behavior plus verified versioned default updates; verify both adapters derive defaults from it, project overrides are honored, and recorded requested settings are distinct from observed runtime models.
 - [ ] 2.2 Add Codex entrypoint, skill materialization, and native role templates with centrally configured Sol/Luna defaults and model overrides; parse generated configuration, check local references, and document main-session selection plus client prerequisites.
 - [ ] 2.3 Add equivalent Claude entrypoint, skills, and native agents with centrally configured Opus/Sonnet defaults and native model overrides; validate generated native metadata and verify no OpenAI model IDs leak into Claude configuration.
-- [ ] 2.4 Document pinned OpenSpec setup for both target profiles and generated/custom file ownership; run those setup commands in isolated fixtures and verify discoverable skills have no naming collisions and generated files remain unmodified; document pinned-CLI regeneration, license retention, and workflow verification for template integrations.
+- [ ] 2.4 Document pinned OpenSpec setup for both target profiles and generated/custom file ownership; run those setup commands in isolated fixtures and verify discoverable skills have no naming collisions and generated files remain unmodified; document pinned-CLI regeneration (including CLI-owned .openspec-target), license retention, and workflow verification for template integrations; explain the follow-up template-build script and GitHub Use this template handoff, without implementing stack-template assembly in this change.
 
 ## 3. Export and structural verification
 
