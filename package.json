@@ -1,0 +1,15 @@
+{
+  "name": "agent-project-core",
+  "version": "0.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=24.15.0 <25"
+  },
+  "packageManager": "pnpm@11.0.9",
+  "scripts": {
+    "verify": "openspec validate --all --strict --no-interactive && openspec validate --archived --no-interactive"
+  },
+  "devDependencies": {
+    "@fission-ai/openspec": "1.14.1"
+  }
+}
