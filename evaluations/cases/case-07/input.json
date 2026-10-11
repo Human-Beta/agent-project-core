@@ -1,0 +1,11 @@
+{
+  "request": "Verify this utility against approved criteria: 18 is eligible, 17 is ineligible, and negative input must be rejected. Run acceptance checks independently; the current suite is the raw artifact.",
+  "files": {
+    "docs/scope.md": "# Scope\nEligibility utility only. No deployment.\n",
+    "docs/architecture.md": "# Architecture\nSmall pure functions in eligibility.mjs; node:test verification.\n",
+    "docs/review.md": "# Review\nVerify observable boundary and invalid input behavior.\n",
+    "package.json": "{\n  \"private\": true,\n  \"type\": \"module\",\n  \"scripts\": {\n    \"test\": \"node --test\"\n  }\n}",
+    "eligibility.mjs": "export const eligible = age => age >= 18;\n",
+    "eligibility.test.mjs": "import test from \"node:test\";\nimport assert from \"node:assert/strict\";\nimport { eligible } from \"./eligibility.mjs\";\ntest(\"adult\", () => assert.equal(eligible(19), true));\n"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "codex": {
+    "coordinator": "gpt-6.1-sol",
+    "implementer": "gpt-6-luna",
+    "reviewer": "gpt-6.1-sol",
+    "qa": "gpt-6-luna",
+    "escalation": "gpt-6.1-sol"
+  },
+  "claude": {
+    "coordinator": "opus",
+    "implementer": "sonnet",
+    "reviewer": "opus",
+    "qa": "sonnet",
+    "escalation": "opus"
+  }
+}

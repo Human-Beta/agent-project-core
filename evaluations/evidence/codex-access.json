@@ -1,0 +1,31 @@
+{
+  "tool": "codex",
+  "clientVersion": "codex-cli 0.146.0",
+  "case": "smoke",
+  "requestedModels": {
+    "coordinator": "gpt-6.1-sol",
+    "implementer": "gpt-6-luna",
+    "reviewer": "gpt-6.1-sol",
+    "qa": "gpt-6-luna",
+    "escalation": "gpt-6.1-sol"
+  },
+  "actualModels": null,
+  "exitCode": 1,
+  "nativeEvents": [
+    {
+      "type": "error",
+      "message": "{\"type\":\"error\",\"status\":400,\"error\":{\"type\":\"invalid_request_error\",\"message\":\"The 'gpt-6.1-sol' model is not supported when using Codex with a ChatGPT account.\"}}"
+    },
+    {
+      "type": "turn.failed",
+      "error": {
+        "message": "{\"type\":\"error\",\"status\":400,\"error\":{\"type\":\"invalid_request_error\",\"message\":\"The 'gpt-6.1-sol' model is not supported when using Codex with a ChatGPT account.\"}}"
+      }
+    }
+  ],
+  "changedArtifacts": [],
+  "observedRoutes": [],
+  "independentReview": "incomplete",
+  "independentQA": "incomplete",
+  "resolutionLimitation": "Server rejected requested coordination model before role execution."
+}

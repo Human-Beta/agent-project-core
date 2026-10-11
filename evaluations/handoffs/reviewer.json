@@ -1,0 +1,22 @@
+{
+  "role": "reviewer",
+  "requirements": [
+    "Only adults aged 18 or older are eligible. Negative ages must be rejected."
+  ],
+  "acceptance": [
+    "18 is eligible",
+    "17 is ineligible",
+    "negative input is rejected"
+  ],
+  "baseline": "export const eligible = age => age >= 18;",
+  "changedFiles": {
+    "eligibility.mjs": "export const eligible = age => age > 18;"
+  },
+  "tests": {
+    "eligibility.test.mjs": "assert.equal(eligible(19), true);"
+  },
+  "rawLogs": [
+    "node --test: 1 passed"
+  ],
+  "scope": "Eligibility only"
+}

@@ -1,0 +1,11 @@
+{
+  "request": "Add a configurable age threshold instead of the fixed threshold. The owner has not yet accepted a plan.",
+  "files": {
+    "docs/scope.md": "# Scope\nEligibility utility only. No deployment.\n",
+    "docs/architecture.md": "# Architecture\nSmall pure functions in eligibility.mjs; node:test verification.\n",
+    "docs/review.md": "# Review\nVerify observable boundary and invalid input behavior.\n",
+    "package.json": "{\n  \"private\": true,\n  \"type\": \"module\",\n  \"scripts\": {\n    \"test\": \"node --test\"\n  }\n}",
+    "eligibility.mjs": "export function eligible(age) {\n  if (!Number.isInteger(age) || age < 0) throw new Error(\"invalid age\");\n  return age >= 18;\n}\n",
+    "eligibility.test.mjs": "import test from \"node:test\";\nimport assert from \"node:assert/strict\";\nimport { eligible } from \"./eligibility.mjs\";\ntest(\"adult\", () => assert.equal(eligible(19), true));\n"
+  }
+}

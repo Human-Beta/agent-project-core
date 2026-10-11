@@ -1,15 +1,20 @@
 {
   "name": "agent-project-core",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "engines": {
     "node": ">=24.15.0 <25"
   },
   "packageManager": "pnpm@11.0.9",
   "scripts": {
-    "verify": "openspec validate --all --strict --no-interactive && openspec validate --archived --no-interactive"
+    "verify": "pnpm core:validate && pnpm test && openspec validate --all --strict --no-interactive && openspec validate --archived --no-interactive",
+    "core:export": "node scripts/export-core.mjs",
+    "core:validate": "node scripts/validate-core.mjs",
+    "test": "node --test tests/*.test.mjs"
   },
   "devDependencies": {
-    "@fission-ai/openspec": "1.14.1"
+    "@fission-ai/openspec": "1.14.1",
+    "smol-toml": "1.7.1",
+    "yaml": "2.8.3"
   }
 }

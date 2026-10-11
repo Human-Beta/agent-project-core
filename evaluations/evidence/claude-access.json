@@ -1,0 +1,13 @@
+{
+  "tool": "claude",
+  "clientVersion": "2.1.246 (Claude Code)",
+  "status": "incomplete",
+  "reason": "Native Claude authentication unavailable; no behavioral sessions executed.",
+  "requestedModels": {
+    "coordinator": "opus",
+    "implementer": "sonnet",
+    "reviewer": "opus",
+    "qa": "sonnet"
+  },
+  "actualModels": null
+}
