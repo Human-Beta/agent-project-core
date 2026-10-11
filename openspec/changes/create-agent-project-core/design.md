@@ -79,6 +79,12 @@ The delivery skill routes requests, then uses the installed OpenSpec integration
 
 The exporter emits custom core files only. Usage instructions show how to install the pinned CLI and initialize the selected native OpenSpec profiles in the target project; export does not execute package installation or OpenSpec initialization in another repository. Test target fixtures with the supported generated profiles and assert there are no custom skill-name collisions. Retain upstream licenses in generated material. This keeps OpenSpec upgrade ownership with its CLI rather than a vendored fork.
 
+### Keep maintainer history out of downstream projects
+
+The repository's openspec/specs, openspec/changes (including archive), openspec/config.yaml, and installed root-level maintainer integrations belong to developing this core. Export uses an explicit allowlist of canonical core assets and selected adapter output; it never copies the repository root or its OpenSpec history. The .openspec-target file in a maintainer integration records the upstream renderer for that skills root; it does not define the supported tool profiles of the reusable core. Leave upstream-generated markers under CLI ownership.
+
+Stack templates assemble the core export with their scaffold, a project-appropriate OpenSpec config, and empty specs/changes/archive directories. They generate and commit the supported native OpenSpec integrations with the pinned local CLI so fresh projects can invoke them without manual init. Preserve upstream licenses and keep generated OpenSpec files separate from custom core skills. On CLI upgrades, regenerate those integrations, review the diff, and verify discovery and relevant workflow behavior. Template assembly and update automation remain separate work; this exporter does not initialize downstream repositories.
+
 ### A bounded exporter prepares new templates
 
 Use `pnpm core:export -- --output <empty-directory> --tools codex,claude --config <project-config.json>` as the public command. Source version comes from the core package; the exported manifest records it and normalized project configuration. No timestamps or machine-specific paths affect output.
