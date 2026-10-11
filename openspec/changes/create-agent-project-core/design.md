@@ -31,6 +31,7 @@ core/
   roles/implementer.md
   roles/reviewer.md
   roles/qa.md
+adapters/model-profiles.json
 adapters/codex/
 adapters/claude/
 scripts/export-core.mjs
@@ -48,11 +49,29 @@ Alternative: separately handwritten AGENTS.md/CLAUDE.md and duplicated skills. R
 
 ### Native syntax belongs to each adapter
 
-Codex uses AGENTS.md, .agents/skills/, and native custom-agent files under .codex/agents/. Its documented model controls support scoped agents; initial explicit defaults are gpt-6.1-sol for review and gpt-6-luna for implementation/QA. The main session is selected by the user; an export cannot switch an already-running session. Overrides are configuration, not edits to canonical roles. See [Codex skills](https://learn.chatgpt.com/docs/build-skills) and [Codex subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents).
+Codex uses AGENTS.md, .agents/skills/, and native custom-agent files under .codex/agents/. Its documented model controls support scoped agents; initial explicit defaults are gpt-6.1-sol for planning/review and gpt-6-luna for implementation/QA. The main session is selected by the user; an export cannot switch an already-running session. Overrides are configuration, not edits to canonical roles. See [Codex skills](https://learn.chatgpt.com/docs/build-skills) and [Codex subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents).
 
-Claude uses CLAUDE.md, .claude/skills/, and .claude/agents/. Use supported local references/imports for shared guidance. Claude model settings are independent: default to inherit until the owner provides native overrides; OpenAI model IDs are never emitted into Claude settings. See [Claude skills](https://code.claude.com/docs/en/skills) and [Claude subagents](https://code.claude.com/docs/en/sub-agents).
+Claude uses CLAUDE.md, .claude/skills/, and .claude/agents/. Use supported local references/imports for shared guidance. Claude has an equally explicit starting profile: opus for planning/review and sonnet for implementation/QA, with native per-project overrides. OpenAI model IDs are never emitted into Claude settings. See [Claude skills](https://code.claude.com/docs/en/skills) and [Claude subagents](https://code.claude.com/docs/en/sub-agents).
 
 Native runtime constraints, permissions, and installed-tool availability remain authoritative. No adapter grants global permissions, disables approvals, configures secrets, or claims unavailable independent execution succeeded.
+
+### Central native model profiles and maintenance
+
+Maintain initial role mappings in adapters/model-profiles.json, read by both adapter renderers. Canonical workflow and role instructions describe responsibilities and escalation without embedding model IDs. Guidance for choosing the main-session model and delegated model files are derived from the same mapping; export does not change an active session.
+
+| Role | Codex default | Claude default |
+| --- | --- | --- |
+| Coordination/planning | gpt-6.1-sol | opus |
+| Implementation/unit tests | gpt-6-luna | sonnet |
+| Independent review | gpt-6.1-sol | opus |
+| Acceptance-based QA | gpt-6-luna | sonnet |
+| Escalated analysis | gpt-6.1-sol | opus |
+
+These are starting policies to evaluate on completed work, not claims of equivalent capability across providers. Sonnet is the initial coding/QA choice; a project may explicitly choose haiku for simpler work or another available native model. See [Claude model configuration](https://code.claude.com/docs/en/model-config) for supported aliases and full IDs. Aliases resolve through the client/provider and can change with runtime versions or provider settings; full native IDs allow version pinning. Codex defaults use explicit IDs and change through maintained profile updates.
+
+When a model is renamed, retired, or a new default is selected, update the central mapping and usage documentation, verify native configuration and overrides, run the affected behavioral evaluations, and publish a new core version. New exports use that version. Existing exported files do not update themselves; merging updates into templates or existing projects remains separate work. A provider-resolved alias can change its actual model even while exported files remain unchanged, so document this trade-off and let projects pin IDs when needed.
+
+The manifest records the requested IDs/aliases and source version, not an invented resolved model. Evaluation and delivery reports record actual runtime models when observable; otherwise disclose that resolution could not be verified. Native clients may substitute an unavailable requested model according to their own rules, so do not report an exact role/model pairing as executed without evidence. No automatic model substitution logic or model catalog service is introduced by the core.
 
 ### Reuse OpenSpec-generated integrations without maintaining a fork
 
@@ -83,7 +102,7 @@ Native Codex and Claude smoke runs demonstrate discovery and delegation with a h
 - Instructions influence agents without guaranteeing behavior → evaluate decisions and report missing evidence; improve narrowly after observed failures.
 - Native configuration changes over time → link official documentation, validate syntax, and record the client versions used for smoke runs.
 - Generated copies can drift if edited downstream → record source version and provenance; automated refresh is separate follow-up work.
-- Default Claude inheritance may cost more than a bounded model → document native overrides without guessing the owner's work account availability.
+- Model access and alias resolution depend on the native account/provider/client → support overrides and pinned IDs, and record actual runtime models or an explicit verification limitation.
 - Independent review adds overhead → keep bounded handoffs, targeted context, and at most two unsuccessful correction cycles.
 
 ## Migration Plan

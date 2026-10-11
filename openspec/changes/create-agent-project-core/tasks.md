@@ -8,9 +8,10 @@
 
 ## 2. Native tool adapters
 
-- [ ] 2.1 Add Codex entrypoint, skill materialization, and native role templates with configured Sol/Luna defaults and model overrides; parse generated configuration, check local references, and document main-session selection plus client prerequisites.
-- [ ] 2.2 Add equivalent Claude entrypoint, skills, and native agents with independent model overrides and default inheritance; validate generated native metadata and verify no OpenAI model IDs leak into Claude configuration.
-- [ ] 2.3 Document pinned OpenSpec setup for both target profiles and generated/custom file ownership; run those setup commands in isolated fixtures and verify discoverable skills have no naming collisions and generated files remain unmodified.
+- [ ] 2.1 Add the central native role-to-model mapping for both tools and document alias/pinning behavior plus verified versioned default updates; verify both adapters derive defaults from it, project overrides are honored, and recorded requested settings are distinct from observed runtime models.
+- [ ] 2.2 Add Codex entrypoint, skill materialization, and native role templates with centrally configured Sol/Luna defaults and model overrides; parse generated configuration, check local references, and document main-session selection plus client prerequisites.
+- [ ] 2.3 Add equivalent Claude entrypoint, skills, and native agents with centrally configured Opus/Sonnet defaults and native model overrides; validate generated native metadata and verify no OpenAI model IDs leak into Claude configuration.
+- [ ] 2.4 Document pinned OpenSpec setup for both target profiles and generated/custom file ownership; run those setup commands in isolated fixtures and verify discoverable skills have no naming collisions and generated files remain unmodified.
 
 ## 3. Export and structural verification
 
@@ -21,8 +22,8 @@
 ## 4. Behavioral evidence and cross-tool acceptance
 
 - [ ] 4.1 Add isolated request/fixture cases for all routing paths, concrete reuse, an omitted failure scenario, failed correction cycles, and unavailable delegation; document the evaluation procedure and check fixtures do not reveal expected conclusions to the evaluating session.
-- [ ] 4.2 Run native Codex evaluation and harmless discovery/delegation smoke checks; record client version, observed routes, artifacts, checks, review/QA independence, and acceptance boundaries, correcting guidance only for demonstrated failures.
-- [ ] 4.3 Run equivalent native Claude evaluation and smoke checks and record its actual model settings; verify both profiles follow the shared behavior, leaving this task incomplete if native access is unavailable rather than substituting structural validation.
+- [ ] 4.2 Run native Codex evaluation and harmless discovery/delegation smoke checks; record client version, requested and actual runtime models (or an explicit resolution limitation), observed routes, artifacts, checks, review/QA independence, and acceptance boundaries, correcting guidance only for demonstrated failures.
+- [ ] 4.3 Run equivalent native Claude evaluation and smoke checks and record requested and actual runtime model settings (or an explicit resolution limitation); verify both profiles follow the shared behavior, leaving this task incomplete if native access is unavailable rather than substituting structural validation.
 - [ ] 4.4 Run pnpm verify and review the complete export/evaluation evidence against both capability specs; confirm README/usage accurately describe demonstrated behavior, incomplete gates, and deferred work.
 
 ## Workflow follow-up
