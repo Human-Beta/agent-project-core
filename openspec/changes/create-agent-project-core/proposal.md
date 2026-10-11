@@ -15,7 +15,7 @@ Starting another personal project currently means recreating agent instructions 
 
 Acceptance means both tool profiles can consume the same canonical guidance, exports are portable, and evaluations demonstrate the routing and acceptance boundaries. Installing files alone does not establish reliable autonomous execution.
 
-Out of scope: application scaffolds; Vue/Next.js defaults; update PR automation; updating existing applications; real deployment; production credentials; replacing Movie Match's current review gates. Those belong to WF-03 through WF-08.
+Out of scope: application scaffolds; Vue/Next.js defaults; update PR automation; updating existing applications; real deployment; production credentials; changing review gates in existing applications. Application adoption and stack-specific templates are separate work.
 
 ## Capabilities
 
@@ -30,4 +30,4 @@ None. This repository has no accepted capability specs or reusable core implemen
 
 ## Impact
 
-Add canonical content, tool-specific adapter sources, a small local exporter, evaluation fixtures, and repository validation/CI. Reuse the pinned OpenSpec CLI (1.14.1) from the bootstrap; use Node.js for local tooling and avoid a new orchestration service or backend. No application database, runtime, or Movie Match files change in this implementation.
+Add canonical content, tool-specific adapter sources, a small local exporter, evaluation fixtures, and repository validation/CI. Reuse the pinned OpenSpec CLI (1.14.1) from the bootstrap; use Node.js for local tooling and avoid a new orchestration service or backend. No consuming application database, runtime, or files change in this implementation.
