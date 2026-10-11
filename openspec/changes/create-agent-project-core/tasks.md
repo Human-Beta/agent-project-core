@@ -11,11 +11,11 @@
 - [ ] 2.1 Add the central native role-to-model mapping for both tools and document alias/pinning behavior plus verified versioned default updates; verify both adapters derive defaults from it, project overrides are honored, and recorded requested settings are distinct from observed runtime models.
 - [ ] 2.2 Add Codex entrypoint, skill materialization, and native role templates with centrally configured Sol/Luna defaults and model overrides; parse generated configuration, check local references, and document main-session selection plus client prerequisites.
 - [ ] 2.3 Add equivalent Claude entrypoint, skills, and native agents with centrally configured Opus/Sonnet defaults and native model overrides; validate generated native metadata and verify no OpenAI model IDs leak into Claude configuration.
-- [ ] 2.4 Document pinned OpenSpec setup for both target profiles and generated/custom file ownership; run those setup commands in isolated fixtures and verify discoverable skills have no naming collisions and generated files remain unmodified.
+- [ ] 2.4 Document pinned OpenSpec setup for both target profiles and generated/custom file ownership; run those setup commands in isolated fixtures and verify discoverable skills have no naming collisions and generated files remain unmodified; document pinned-CLI regeneration, license retention, and workflow verification for template integrations.
 
 ## 3. Export and structural verification
 
-- [ ] 3.1 Implement validated project configuration and the bounded exporter with usage examples; test actual files for Codex-only, Claude-only, combined output, project-specific commands, overrides, and independence from the source checkout.
+- [ ] 3.1 Implement validated project configuration and the bounded exporter with usage examples; test actual files for Codex-only, Claude-only, combined output, project-specific commands, overrides, and independence from the source checkout, and exclusion of core OpenSpec history/config and installed maintainer integrations.
 - [ ] 3.2 Add rejection and reproducibility coverage alongside the exporter: test missing/invalid input, unsupported profiles, path traversal/symlink escapes, nonempty destination preservation, failure cleanup, and byte-identical output for identical inputs.
 - [ ] 3.3 Set the initial core source version to 0.1.0, record source/configuration identity in exported manifests, and add structural validation plus CI to pnpm verify; verify missing references fail with actionable paths and a frozen-lockfile checkout passes the documented commands.
 

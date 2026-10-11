@@ -14,11 +14,15 @@ The core SHALL maintain shared workflow, engineering guidance, role responsibili
 - **THEN** Codex and Claude receive the same revised policy without manually editing two policy copies
 
 ### Requirement: Export selected native profiles
-The exporter SHALL support Codex, Claude, or both profiles. Each export SHALL include discoverable native entrypoints, skills, role definitions, referenced guidance, and a core version marker. An exported profile SHALL remain usable without access to the source checkout.
+The exporter SHALL support Codex, Claude, or both profiles. Each export SHALL include discoverable native entrypoints, skills, role definitions, referenced guidance, and a core version marker. An exported profile SHALL remain usable without access to the source checkout and SHALL exclude core-repository OpenSpec history, project-specific config, and maintainer integrations.
 
 #### Scenario: Both tools in a new project
 - **WHEN** both profiles are exported and the source checkout is unavailable
 - **THEN** all exported guidance references resolve locally and both tools have their native entrypoints and skills
+
+#### Scenario: Core repository has development history
+- **WHEN** the core repository contains accepted core specs, active changes, archives, and installed maintainer integrations
+- **THEN** exported files exclude that OpenSpec history, its repository-specific config, and maintainer integration files, while retaining the selected distributable core assets
 
 #### Scenario: Codex-only profile
 - **WHEN** only Codex is selected
