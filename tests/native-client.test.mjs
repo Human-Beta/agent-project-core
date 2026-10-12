@@ -18,7 +18,7 @@ test('native runner selects bundled client over stale PATH and honors explicit o
   const bundled = path.join(temp, 'bundled-client');
   const explicit = path.join(temp, 'explicit-client');
   for (const client of [bundled, explicit]) {
-    await writeFile(client, `#!${process.execPath}\nconst args = process.argv.slice(2);\nif (args.includes('--version')) console.log(${JSON.stringify(path.basename(client))});\nelse { if (!args.includes('gpt-6.1-sol')) process.exit(98); process.stdin.resume(); process.stdin.on('end', () => console.log(JSON.stringify({type:'test-client', modelExecuted:false}))); }\n`);
+    await writeFile(client, `#!${process.execPath}\nconst args = process.argv.slice(2);\nif (args.includes('--version')) console.log(${JSON.stringify(path.basename(client))});\nelse { require('node:fs').writeFileSync('test-evidence.txt',process.cwd()); if (!args.includes('gpt-6.1-sol')) process.exit(98); process.stdin.resume(); process.stdin.on('end', () => console.log(JSON.stringify({type:'test-client', modelExecuted:false}))); }\n`);
     await chmod(client, 0o755);
   }
   for (const useExplicit of [false, true]) {
@@ -34,6 +34,7 @@ test('native runner selects bundled client over stale PATH and honors explicit o
     assert.equal(record.clientVersion, useExplicit ? 'explicit-client' : 'bundled-client');
     assert.equal(record.actualModels, null);
     assert.match(record.stdout, /"modelExecuted":false/);
+    assert.equal(record.changedArtifacts['test-evidence.txt'],'<fixture>');
     }
   }
 });

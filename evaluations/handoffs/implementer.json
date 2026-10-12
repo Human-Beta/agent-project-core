@@ -8,5 +8,10 @@
     "eligibility.test.mjs"
   ],
   "verificationCommand": "node --test",
-  "correctionCount": 0
+  "correctionCount": 0,
+  "workspaceRoot": "<fixture-root>",
+  "allowedWritePaths": [
+    "eligibility.mjs",
+    "eligibility.test.mjs"
+  ]
 }

@@ -18,5 +18,7 @@
   "rawLogs": [
     "node --test: 1 passed"
   ],
-  "scope": "Eligibility only"
+  "scope": "Eligibility only",
+  "workspaceRoot": "<fixture-root>",
+  "allowedWritePaths": []
 }
