@@ -16,3 +16,5 @@ A delivery report includes:
 - Unresolved decisions, missing gates, and the next concrete action.
 
 Structural file validation and policy text tests do not demonstrate native routing, independent review, or acceptance-based QA. Keep those evidence categories separate. Owner acceptance follows the report; deployment follows an explicit authorizing request.
+
+Use the native tool success/failure status and raw output when available. If a literal numeric shell exit code is not exposed, disclose that metadata limitation; do not repeatedly rerun a passing check solely to obtain it or add compound wrappers that require unrelated permissions.

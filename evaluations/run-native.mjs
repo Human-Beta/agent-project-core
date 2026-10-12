@@ -6,9 +6,9 @@ import { fileURLToPath } from 'node:url';
 import { exportCore, sourceRoot } from '../scripts/export-core.mjs';
 const here=path.dirname(fileURLToPath(import.meta.url));
 const config={scope:'docs/scope.md',architecture:'docs/architecture.md',reviewGuidance:'docs/review.md',verificationCommand:'node --test'};
-function run(command,args,{cwd,input,timeout=120000}={}) {
+function run(command,args,{cwd,input,timeout=120000,environment={}}={}) {
  return new Promise(resolve=>{
-  const child=spawn(command,args,{cwd,detached:true,env:{...process.env,DO_NOT_TRACK:'1'},stdio:['pipe','pipe','pipe']});let stdout='',stderr='',timedOut=false;
+  const child=spawn(command,args,{cwd,detached:true,env:{...process.env,DO_NOT_TRACK:'1',...environment},stdio:['pipe','pipe','pipe']});let stdout='',stderr='',timedOut=false;
   const timer=setTimeout(()=>{timedOut=true;try{process.kill(-child.pid,'SIGTERM');}catch{}},timeout);
   child.stdout.on('data',d=>stdout+=d);child.stderr.on('data',d=>stderr+=d);
   child.on('error',error=>{clearTimeout(timer);resolve({exitCode:null,stdout,stderr:stderr+error.message,timedOut});});
@@ -76,21 +76,22 @@ async function main() {
    const baseline=await files(workspace);
    const manifest=JSON.parse(baseline['.agent-core/manifest.json']);
    const request=id==='smoke'?'List the discovered deliver-change, review-change, and verify-change skills. Use separate native core-reviewer and core-qa agents to inspect raw requirements and eligibility.mjs plus eligibility.test.mjs. Requirements: 18 is eligible; 17 is ineligible; negative input must be rejected. Pass raw artifacts without implementation conclusions. Report actual delegation identity, findings, command outcomes, and runtime model visibility. Do not edit product files.':fixture.request;
-   const prompt='Work only in this isolated fixture. Do not deploy, publish a PR, message anyone, modify global settings, or access unrelated projects. Follow the exported core guidance and installed skills. Do not read evaluation rubrics or prior evidence. Do not inspect environment variables or credentials for model metadata; use metadata already exposed by the native client, or report that resolution is unavailable.\n\n'+request;
+   const delegation=id==='case-09'?'':'You are explicitly authorized to use bounded native implementer, reviewer, and QA agents when the selected route requires them. Run independent review and QA concurrently after implementation when supported, keeping their raw inputs and conclusions separate. ';
+   const prompt=delegation+'Work only in this isolated fixture. Do not deploy, publish a PR, message anyone, modify global settings, or access unrelated projects. Follow the exported core guidance and installed skills. Do not read evaluation rubrics or prior evidence. Do not inspect environment variables or credentials for model metadata; use metadata already exposed by the native client, or report that resolution is unavailable. Run verification commands directly and use the native tool outcome; do not repeatedly rerun passing checks solely to capture literal shell exit codes.\n\n'+request;
    let nativeArgs;
    if(tool==='codex')nativeArgs=['exec','--ignore-user-config','--ephemeral','--skip-git-repo-check','--json','-m',manifest.requestedModels.codex.coordinator,'-s','workspace-write','-C',workspace];
-   else nativeArgs=['--allowedTools','Bash(node *)','Bash(pnpm exec openspec *)','-p','--model',manifest.requestedModels.claude.coordinator,'--output-format','stream-json','--verbose','--no-session-persistence','--setting-sources','project','--strict-mcp-config','--mcp-config','{"mcpServers":{}}','--permission-mode','acceptEdits'];
+   else nativeArgs=['--allowedTools','Bash(echo *)','Bash(node *)','Bash(pnpm exec openspec *)','Bash(openspec *)','Bash(./node_modules/.bin/openspec *)','-p','--model',manifest.requestedModels.claude.coordinator,'--output-format','stream-json','--verbose','--no-session-persistence','--setting-sources','project','--strict-mcp-config','--mcp-config','{"mcpServers":{}}','--permission-mode','acceptEdits'];
    if(id==='case-09') {
     if(tool==='codex')nativeArgs.push('-c','features.multi_agent=false');
     else nativeArgs.push('--disallowedTools','Agent,Task');
    }
    console.log(`Running ${tool} ${id}`);
-   const result=await run(client,nativeArgs,{cwd:workspace,input:prompt,timeout});
+   const result=await run(client,nativeArgs,{cwd:workspace,input:prompt,timeout,environment:{PATH:path.join(workspace,'node_modules/.bin')+path.delimiter+process.env.PATH}});
    const after=await files(workspace);
    const changed={};for(const [name,text] of Object.entries(after))if(text!==baseline[name])changed[name]=text;
    const scrub=text=>text.replaceAll(workspace,'<fixture>').replaceAll(temp,'<temporary>').replaceAll(sourceRoot,'<core-source>').replaceAll(os.homedir(),'<user-home>');
    const actualModels=observeRuntimeModels(tool,result.stdout);
-   const record={tool,case:id,clientVersion:version.stdout.trim(),clientSelection,timeoutMs:timeout,requestedModels:manifest.requestedModels[tool],actualModels,resolutionLimitation:actualModels?'Only roles with explicit native model events are recorded; unobserved roles remain unresolved.':'Requested configuration is recorded; native events do not expose resolved runtime model IDs.',exitCode:result.exitCode,timedOut:result.timedOut,stdout:scrub(result.stdout),stderr:scrub(result.stderr),changedArtifacts:changed};
+   const record={tool,case:id,clientVersion:version.stdout.trim(),clientSelection,timeoutMs:timeout,requestedModels:manifest.requestedModels[tool],actualModels,resolutionLimitation:actualModels?'Only roles with explicit native model events are recorded; unobserved roles remain unresolved.':'Requested configuration is recorded; native events do not expose resolved runtime model IDs.',exitCode:result.exitCode,timedOut:result.timedOut,stdout:scrub(result.stdout),stderr:scrub(result.stderr),changedArtifacts:Object.fromEntries(Object.entries(changed).map(([name,text])=>[name,scrub(text)]))};
    await writeFile(path.join(output,id+'.json'),JSON.stringify(record,null,2)+'\n');console.log(`Recorded ${id}: exit ${result.exitCode}, timeout ${result.timedOut}`);
    if(result.exitCode!==0||result.timedOut){console.log('Native execution failed; remaining cases stay incomplete.');break;}
   } finally {await rm(temp,{recursive:true,force:true});}

@@ -5,3 +5,5 @@ Verify independently from implementation. Read [verification](../guidance/verifi
 Input contract: approved requirements, acceptance scenarios, raw runnable artifacts, environment and configured verification command, relevant boundary setup, raw test files/logs, and scope. Implementation conclusions cannot establish acceptance.
 
 Return scenario-to-evidence mapping, exact commands/outcomes, omitted scenarios, QA status, execution identity and observable model, and missing capabilities. Do not edit product behavior, weaken criteria, deploy, or archive. If independent execution or a runtime boundary is unavailable, leave that gate incomplete.
+
+Workspace boundary: the handoff must identify the workspace root and allowed write paths, including evidence/check artifacts. Stay within those paths. If no report-write path is supplied, return evidence inline; do not create reports in a global temporary directory.
