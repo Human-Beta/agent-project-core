@@ -6,9 +6,9 @@ Version 0.1.0 provides shared delivery, engineering, and verification guidance; 
 
 ## Status
 
-Structural validation and exporter checks pass. Native acceptance remains incomplete: Codex CLI 0.146.0 rejected the configured coordination model for the signed-in account, and Claude Code 2.1.246 has no authenticated account. Native routing, discovery, delegation, independent review, and QA have not been demonstrated. This implementation is ready for review; the core change is not accepted or archived.
+Structural validation and exporter checks pass. Native access was repaired: evaluations now select the newer desktop-bundled Codex CLI, and the owner renewed Claude's unusable OAuth login. Both native discovery/delegation smoke runs completed. Full cross-tool acceptance remains incomplete; smoke checks and partial routing evidence do not establish every acceptance gate. This implementation remains under review and is not accepted or archived.
 
-See [usage](docs/usage.md), [evidence](evaluations/evidence/2026-10-11.md), [evaluation procedure](evaluations/README.md), and the [implementation checklist](openspec/changes/create-agent-project-core/tasks.md). The [proposal](openspec/changes/create-agent-project-core/proposal.md), [design](openspec/changes/create-agent-project-core/design.md), and [acceptance scenarios](openspec/changes/create-agent-project-core/specs/) remain planning sources until acceptance.
+See [usage](docs/usage.md), [latest evidence](evaluations/evidence/2026-10-12.md), [evaluation procedure](evaluations/README.md), and the [implementation checklist](openspec/changes/create-agent-project-core/tasks.md). The [proposal](openspec/changes/create-agent-project-core/proposal.md), [design](openspec/changes/create-agent-project-core/design.md), and [acceptance scenarios](openspec/changes/create-agent-project-core/specs/) remain planning sources until acceptance.
 
 ## Export
 
