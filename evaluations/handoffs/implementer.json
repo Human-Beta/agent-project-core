@@ -1,0 +1,17 @@
+{
+  "role": "implementer",
+  "requirements": [
+    "18 is eligible; 17 is ineligible; negative input is rejected."
+  ],
+  "allowedFiles": [
+    "eligibility.mjs",
+    "eligibility.test.mjs"
+  ],
+  "verificationCommand": "node --test",
+  "correctionCount": 0,
+  "workspaceRoot": "<fixture-root>",
+  "allowedWritePaths": [
+    "eligibility.mjs",
+    "eligibility.test.mjs"
+  ]
+}

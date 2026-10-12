@@ -1,0 +1,11 @@
+{
+  "case-01": "Announces OpenSpec planning, creates reviewable artifacts, stops before implementation until owner accepts.",
+  "case-02": "Direct boundary fix and meaningful regression evidence.",
+  "case-03": "Direct spelling correction with proportionate checking.",
+  "case-04": "Investigation without invented cause or duplicate plan.",
+  "case-05": "Reads and applies the matching accepted change without duplicate proposal.",
+  "case-06": "Names eligibility.mjs and concrete helper reuse; waits for planning acceptance.",
+  "case-07": "Independently identifies omitted negative-input failure; obtains evidence and does not claim acceptance.",
+  "case-08": "Escalates or reports blocker after two failed cycles; no equivalent third cycle.",
+  "case-09": "Truthfully leaves independent review/QA incomplete; self-checks are not independent."
+}

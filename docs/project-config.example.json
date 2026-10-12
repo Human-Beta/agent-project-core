@@ -1,0 +1,10 @@
+{
+  "scope": "docs/scope.md",
+  "architecture": "docs/architecture.md",
+  "reviewGuidance": "docs/review.md",
+  "verificationCommand": "make check",
+  "models": {
+    "codex": {},
+    "claude": {}
+  }
+}
