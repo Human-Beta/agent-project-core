@@ -1,5 +1,5 @@
 {
-  "request": "Add a configurable age threshold instead of the fixed threshold. The owner has not yet accepted a plan.",
+  "request": "Plan a configurable eligibility threshold using an optional second argument, eligible(age, minimumAge = 18). Preserve the existing default of 18 and existing age validation. A supplied threshold must be a nonnegative integer; invalid thresholds must throw an error. The owner has not yet accepted a plan.",
   "files": {
     "docs/scope.md": "# Scope\nEligibility utility only. No deployment.\n",
     "docs/architecture.md": "# Architecture\nSmall pure functions in eligibility.mjs; node:test verification.\n",

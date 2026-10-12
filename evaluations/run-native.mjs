@@ -57,7 +57,7 @@ async function main() {
   let loggedIn=false;try{loggedIn=JSON.parse(auth.stdout).loggedIn===true;}catch{}
   if(!loggedIn){await writeFile(path.join(output,'access.json'),JSON.stringify({tool,clientVersion:version.stdout.trim(),clientSelection,status:'incomplete',reason:'Native Claude authentication unavailable; no behavioral sessions executed.',requestedModels:{coordinator:'opus',implementer:'sonnet',reviewer:'opus',qa:'sonnet'},actualModels:null},null,2)+'\n');console.log('Native Claude authentication unavailable; gate incomplete.');return;}
  }
- const selected=options['--case']?[options['--case']]:[...Array.from({length:9},(_,i)=>`case-${String(i+1).padStart(2,'0')}`),'smoke'];
+ const selected=options['--case']?options['--case'].split(','):[...Array.from({length:9},(_,i)=>`case-${String(i+1).padStart(2,'0')}`),'smoke'];
  for(const id of selected) {
   if(id!=='smoke'&&!/^case-0[1-9]$/.test(id))throw new Error(`Unknown case: ${id}`);
   const temp=await realpath(await mkdtemp(path.join(os.tmpdir(),'core-native-')));const workspace=path.join(temp,'project');
@@ -65,8 +65,14 @@ async function main() {
    await exportCore({output:workspace,tools:[tool],config});
    const fixture=JSON.parse(await readFile(path.join(here,'cases',id==='smoke'?'case-07':id,'input.json'),'utf8'));
    for(const [name,text] of Object.entries(fixture.files)){const filename=path.join(workspace,name);await mkdir(path.dirname(filename),{recursive:true});await writeFile(filename,text);}
-   const install=await run('pnpm',['add','-D','-E','@fission-ai/openspec@1.14.1','--offline'],{cwd:workspace,timeout:30000});if(install.exitCode!==0)throw new Error('Fixture pinned CLI install failed: '+install.stderr);
-   const init=await run('pnpm',['exec','openspec','init','--tools',tool,'--profile','core','--no-animation'],{cwd:workspace,timeout:15000});if(init.exitCode!==0)throw new Error(init.stderr);
+   const fixturePackage=JSON.parse(await readFile(path.join(workspace,'package.json'),'utf8'));
+   const corePackage=JSON.parse(await readFile(path.join(sourceRoot,'package.json'),'utf8'));
+   fixturePackage.devDependencies=corePackage.devDependencies;
+   fixturePackage.packageManager=corePackage.packageManager;
+   await writeFile(path.join(workspace,'package.json'),JSON.stringify(fixturePackage,null,2)+'\n');
+   await writeFile(path.join(workspace,'pnpm-lock.yaml'),await readFile(path.join(sourceRoot,'pnpm-lock.yaml')));
+   const install=await run('pnpm',['install','--frozen-lockfile','--offline'],{cwd:workspace,timeout:30000});if(install.exitCode!==0)throw new Error('Fixture pinned CLI install failed: '+install.stdout+install.stderr);
+   const init=await run('pnpm',['exec','openspec','init','--tools',tool,'--profile','core','--no-animation'],{cwd:workspace,timeout:15000});if(init.exitCode!==0)throw new Error(init.stdout+init.stderr);
    const baseline=await files(workspace);
    const manifest=JSON.parse(baseline['.agent-core/manifest.json']);
    const request=id==='smoke'?'List the discovered deliver-change, review-change, and verify-change skills. Use separate native core-reviewer and core-qa agents to inspect raw requirements and eligibility.mjs plus eligibility.test.mjs. Requirements: 18 is eligible; 17 is ineligible; negative input must be rejected. Pass raw artifacts without implementation conclusions. Report actual delegation identity, findings, command outcomes, and runtime model visibility. Do not edit product files.':fixture.request;

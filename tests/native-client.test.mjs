@@ -23,15 +23,18 @@ test('native runner selects bundled client over stale PATH and honors explicit o
   }
   for (const useExplicit of [false, true]) {
     const output = path.join(temp, useExplicit ? 'explicit-evidence' : 'bundled-evidence');
-    const args = [path.join(sourceRoot, 'evaluations/run-native.mjs'), '--tool', 'codex', '--case', 'smoke', '--output', output];
+    const args = [path.join(sourceRoot, 'evaluations/run-native.mjs'), '--tool', 'codex', '--case', useExplicit ? 'smoke' : 'case-03,case-04', '--output', output];
     if (useExplicit) args.push('--client', explicit);
     await exec(process.execPath, args, { cwd: sourceRoot, env: { ...process.env, CODEX_CLI_PATH: bundled, PATH: oldBin + path.delimiter + process.env.PATH }, timeout: 60000 });
-    const record = JSON.parse(await readFile(path.join(output, 'smoke.json'), 'utf8'));
+    const caseNames = useExplicit ? ['smoke'] : ['case-03', 'case-04'];
+    for (const caseName of caseNames) {
+    const record = JSON.parse(await readFile(path.join(output, caseName + '.json'), 'utf8'));
     assert.equal(record.exitCode, 0);
     assert.equal(record.clientSelection, useExplicit ? 'explicit' : 'desktop-bundled');
     assert.equal(record.clientVersion, useExplicit ? 'explicit-client' : 'bundled-client');
     assert.equal(record.actualModels, null);
     assert.match(record.stdout, /"modelExecuted":false/);
+    }
   }
 });
 
