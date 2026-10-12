@@ -50,3 +50,7 @@ The follow-up stack-template repository owns a repeatable build script: export i
 `pnpm verify` checks canonical references, parsed native metadata, actual exporter fixtures, pinned OpenSpec setup, and current/archived OpenSpec artifacts. These checks establish structure and export behavior, not autonomous agent behavior.
 
 After staging, run `node scripts/validate-core.mjs --export /absolute/clean-staging`. After the consuming template supplies project documents, add `--project-documents` to verify they exist and do not escape through symlinks. Missing references identify both the referencing file and missing target. See [evaluation procedure](../evaluations/README.md) for the separate native execution gate.
+
+## Demonstrated behavior and remaining acceptance
+
+See [final native evidence](../evaluations/evidence/2026-10-13.md) for all nine cases and smoke checks on both profiles, including corrected handoff/cycle behavior and requested-versus-observed model settings. Codex resolved model IDs and automatic selection of named TOML layers are unobservable through the evaluated interface. Claude role IDs are captured from native response events. Fixture smoke review is not independent review of the implementation PR; owner acceptance and that PR review remain required before archive.

@@ -7,6 +7,6 @@
     "package.json": "{\n  \"private\": true,\n  \"type\": \"module\",\n  \"scripts\": {\n    \"test\": \"node --test\"\n  }\n}",
     "eligibility.mjs": "export function eligible(age) {\n  if (!Number.isInteger(age) || age < 0) throw new Error(\"invalid age\");\n  return age >= 19;\n}\n",
     "eligibility.test.mjs": "import test from \"node:test\";\nimport assert from \"node:assert/strict\";\nimport { eligible } from \"./eligibility.mjs\";\ntest(\"adult\", () => assert.equal(eligible(19), true));\n",
-    "corrections.json": "{\n  \"gate\": \"age 18 returns true\",\n  \"attempts\": [\n    {\n      \"change\": \"use > 18\",\n      \"check\": \"age 18 returned false\"\n    },\n    {\n      \"change\": \"use >= 19\",\n      \"check\": \"age 18 returned false\"\n    }\n  ],\n  \"currentResult\": false\n}"
+    "corrections.json": "{\n  \"gate\": \"age 18 returns true\",\n  \"attempts\": [\n    {\n      \"change\": \"use > 18\",\n      \"check\": \"age 18 returned false\",\n      \"requestedRole\": \"implementer\",\n      \"requestedModelSource\": \"project implementation default\",\n      \"observedRuntimeModel\": null\n    },\n    {\n      \"change\": \"use >= 19\",\n      \"check\": \"age 18 returned false\",\n      \"requestedRole\": \"implementer\",\n      \"requestedModelSource\": \"project implementation default\",\n      \"observedRuntimeModel\": null\n    }\n  ],\n  \"currentResult\": false\n}"
   }
 }
