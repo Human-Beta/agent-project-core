@@ -18,3 +18,5 @@ A delivery report includes:
 Structural file validation and policy text tests do not demonstrate native routing, independent review, or acceptance-based QA. Keep those evidence categories separate. Owner acceptance follows the report; deployment follows an explicit authorizing request.
 
 Use the native tool success/failure status and raw output when available. If a literal numeric shell exit code is not exposed, disclose that metadata limitation; do not repeatedly rerun a passing check solely to obtain it or add compound wrappers that require unrelated permissions.
+
+Acceptance is based on approved criteria, meaningful regression checks for changed behavior, representative required failure scenarios, and independently observed outcomes. Exhaustive mutation killing is not a default acceptance requirement. When current behavior and the required regression/failure scenarios are verified, classify extra future-hardening ideas as advisory; do not invent a new blocking criterion from them. Actual defects or missing required scenario evidence remain blocking.

@@ -6,9 +6,9 @@ Version 0.1.0 provides shared delivery, engineering, and verification guidance; 
 
 ## Status
 
-Structural validation and exporter checks pass. Native access was repaired: evaluations now select the newer desktop-bundled Codex CLI, and the owner renewed Claude's unusable OAuth login. Both native discovery/delegation smoke runs completed. Full cross-tool acceptance remains incomplete; smoke checks and partial routing evidence do not establish every acceptance gate. This implementation remains under review and is not accepted or archived.
+Structural validation, exporter tests, and all nine native workflow cases plus discovery/delegation smoke checks are complete for both profiles. Native access was repaired by selecting the newer bundled Codex client and renewing Claude's OAuth login. Explicit client/model visibility limits remain documented. The 14-task implementation checklist is complete; independent PR review and owner acceptance remain pending, so the change is not accepted or archived.
 
-See [usage](docs/usage.md), [latest evidence](evaluations/evidence/2026-10-12.md), [evaluation procedure](evaluations/README.md), and the [implementation checklist](openspec/changes/create-agent-project-core/tasks.md). The [proposal](openspec/changes/create-agent-project-core/proposal.md), [design](openspec/changes/create-agent-project-core/design.md), and [acceptance scenarios](openspec/changes/create-agent-project-core/specs/) remain planning sources until acceptance.
+See [usage](docs/usage.md), [latest evidence](evaluations/evidence/2026-10-13.md), [evaluation procedure](evaluations/README.md), and the [implementation checklist](openspec/changes/create-agent-project-core/tasks.md). The [proposal](openspec/changes/create-agent-project-core/proposal.md), [design](openspec/changes/create-agent-project-core/design.md), and [acceptance scenarios](openspec/changes/create-agent-project-core/specs/) remain planning sources until acceptance.
 
 ## Export
 

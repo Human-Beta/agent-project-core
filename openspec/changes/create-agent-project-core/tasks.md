@@ -23,7 +23,7 @@
 
 - [x] 4.1 Add isolated request/fixture cases for all routing paths, concrete reuse, an omitted failure scenario, failed correction cycles, and unavailable delegation; document the evaluation procedure and check fixtures do not reveal expected conclusions to the evaluating session.
 - [x] 4.2 Run native Codex evaluation and harmless discovery/delegation smoke checks; record client version, requested and actual runtime models (or an explicit resolution limitation), observed routes, artifacts, checks, review/QA independence, and acceptance boundaries, correcting guidance only for demonstrated failures.
-- [ ] 4.3 Run equivalent native Claude evaluation and smoke checks and record requested and actual runtime model settings (or an explicit resolution limitation); verify both profiles follow the shared behavior, leaving this task incomplete if native access is unavailable rather than substituting structural validation.
+- [x] 4.3 Run equivalent native Claude evaluation and smoke checks and record requested and actual runtime model settings (or an explicit resolution limitation); verify both profiles follow the shared behavior, leaving this task incomplete if native access is unavailable rather than substituting structural validation.
 - [x] 4.4 Run pnpm verify and review the complete export/evaluation evidence against both capability specs; confirm README/usage accurately describe demonstrated behavior, incomplete gates, and deferred work.
 
 ## Workflow follow-up
