@@ -1,5 +1,5 @@
 {
-  "request": "Plan an eligibility message function that says accepted or rejected using existing eligibility behavior. The owner has not accepted a plan.",
+  "request": "Plan an eligibility message function message(age) returning exactly accepted when eligible(age) is true and rejected when it is false. Preserve the existing invalid-age error behavior. Use existing eligibility behavior. The owner has not accepted a plan.",
   "files": {
     "docs/scope.md": "# Scope\nEligibility utility only. No deployment.\n",
     "docs/architecture.md": "# Architecture\nSmall pure functions in eligibility.mjs; node:test verification.\n",
