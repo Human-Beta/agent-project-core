@@ -24,9 +24,16 @@ export async function validateProjectDocuments(root,config) {
  }
 }
 export async function validateExport(root,{projectDocuments=false}={}) {
- const files=await readTree(root);validateFiles(files);
- const manifest=JSON.parse(files.get('.agent-core/manifest.json'));
+ const manifestPath=path.join(root,'.agent-core/manifest.json');await assertNoSymlinks(manifestPath);
+ const manifest=JSON.parse(await readFile(manifestPath,'utf8'));
  const config=normalizeConfig(manifest.configuration);
+ // Derive ownership from the exporter; assembled application and upstream files are not core assets.
+ const expected=await buildExport({tools:manifest.tools,config});const files=new Map();
+ for(const name of expected.keys()) {
+  const filename=path.join(root,name);await assertNoSymlinks(filename);
+  files.set(name,await readFile(filename,'utf8'));
+ }
+ validateFiles(files);
  if(projectDocuments)await validateProjectDocuments(root,config);
  return files.size;
 }
@@ -56,7 +63,7 @@ async function main() {
  const args=process.argv.slice(2);
  if(!args.length) {await validateSource();console.log('Canonical content and all native profiles validated.');}
  else if(args[0]==='--export'&&args[1]&&args.slice(2).every(a=>a==='--project-documents')) {
-  const count=await validateExport(path.resolve(args[1]),{projectDocuments:args.includes('--project-documents')});console.log(`Validated ${count} files; project documents ${args.includes('--project-documents')?'checked':'await template assembly'}.`);
+  const count=await validateExport(path.resolve(args[1]),{projectDocuments:args.includes('--project-documents')});console.log(`Validated ${count} generated core files; project documents ${args.includes('--project-documents')?'checked':'await template assembly'}.`);
  } else throw new Error('Usage: node scripts/validate-core.mjs [--export <directory> [--project-documents]]');
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))main().catch(error=>{console.error(error.message);process.exitCode=1;});
