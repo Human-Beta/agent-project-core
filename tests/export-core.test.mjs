@@ -62,6 +62,20 @@ test('nonempty destination and symlink escapes preserve existing files',async t=
  await assert.rejects(exportCore({output:path.join(dir,'link'),tools:['codex'],config}),/symlink/);
  assert.deepEqual(await readdir(out),['keep']);
 });
+test('case aliases cannot export into the physical source checkout',async t=>{
+ const dir=await temporary(t);const root=path.join(dir,'source');await mkdir(root);
+ const alias=path.join(dir,'SOURCE');
+ try {if(await realpath(alias)!==await realpath(root))return t.skip('filesystem distinguishes case');}
+ catch(error) {if(error.code==='ENOENT')return t.skip('filesystem distinguishes case');throw error;}
+ for(const folder of ['core','adapters'])await cp(path.join(sourceRoot,folder),path.join(root,folder),{recursive:true});await cp(path.join(sourceRoot,'package.json'),path.join(root,'package.json'));
+ const before=await snapshot(root);
+ for(const options of [
+  {root,output:path.join(alias,'CORE','GUIDANCE','nested','out')},
+  {root:alias,output:path.join(root,'core','guidance','nested','out')},
+  {root,output:path.join(alias,'core','guidance')},
+ ])await assert.rejects(exportCore({...options,tools:['codex'],config}),/outside the source checkout/);
+ assert.deepEqual(await snapshot(root),before);
+});
 test('failed write cleans partial files and preserves preexisting directories',async t=>{
  const dir=await temporary(t);
  for(const existing of [false,true]) {
