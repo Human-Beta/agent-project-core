@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, realpath, mkdir, writeFile, symlink, rm } from 'node:fs/promises';
+import { mkdtemp, realpath, mkdir, readFile, writeFile, symlink, rm } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import { exportCore } from '../scripts/export-core.mjs';
@@ -38,4 +38,18 @@ test('assembly validation still rejects damaged or missing generated agents',asy
  await rm(agent);await assert.rejects(validateExport(out),/core-qa\.toml/);
  const outside=path.join(dir,'agent.toml');await writeFile(outside,'name = "core-qa"\n');await symlink(outside,agent);
  await assert.rejects(validateExport(out),/symlink/);
+});
+test('assembly validation rejects invalid Claude agent identity and model types',async t=>{
+ const dir=await realpath(await mkdtemp(path.join(os.tmpdir(),'core-validation-')));t.after(()=>rm(dir,{recursive:true,force:true}));const out=path.join(dir,'out');
+ const config={scope:'docs/scope.md',architecture:'docs/architecture.md',reviewGuidance:'docs/review.md',verificationCommand:'make check'};
+ await exportCore({output:out,tools:['claude'],config});const agent=path.join(out,'.claude','agents','core-qa.md');const original=await readFile(agent,'utf8');
+ for(const name of ['-qa','core-reviewer']) {
+  await writeFile(agent,original.replace('name: "core-qa"',`name: "${name}"`));
+  await assert.rejects(validateExport(out),/core-qa\.md:.*name/);
+ }
+ for(const model of ['true','42','[]','{}','"gpt-6-luna"','"not-a-native-model"']) {
+  await writeFile(agent,original.replace('model: "sonnet"',`model: ${model}`));
+  await assert.rejects(validateExport(out),/core-qa\.md: invalid Claude model/);
+ }
+ await writeFile(agent,original.replace('model: "sonnet"','model: "claude-sonnet-5"'));await validateExport(out);
 });

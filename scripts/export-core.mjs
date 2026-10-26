@@ -1,4 +1,4 @@
-import { readFile, lstat, readdir, mkdir, writeFile, unlink, rmdir } from 'node:fs/promises';
+import { readFile, lstat, realpath, readdir, mkdir, writeFile, unlink, rmdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
@@ -17,6 +17,10 @@ const roleDescriptions = {
 const json = value => JSON.stringify(value, null, 2) + '\n';
 const hash = value => createHash('sha256').update(value).digest('hex');
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+function validModel(tool, model) {
+  const pattern = tool === 'codex' ? /^gpt-[a-zA-Z0-9.-]+$/ : /^(opus|sonnet|haiku|fable|claude-[a-zA-Z0-9.[\]-]+)$/;
+  return typeof model === 'string' && pattern.test(model);
+}
 function keys(value, allowed, label) {
   if (!object(value)) throw new Error(`${label} must be an object`);
   for (const key of Object.keys(value)) if (!allowed.includes(key)) throw new Error(`${label}.${key}: unknown field`);
@@ -42,8 +46,7 @@ export function normalizeConfig(input) {
     config.models[tool] = {};
     for (const role of roles) if (Object.hasOwn(overrides, role)) {
       const model = overrides[role];
-      const valid = tool === 'codex' ? /^gpt-[a-zA-Z0-9.-]+$/ : /^(opus|sonnet|haiku|fable|claude-[a-zA-Z0-9.[\]-]+)$/;
-      if (typeof model !== 'string' || !valid.test(model)) throw new Error(`config.models.${tool}.${role}: expected a native ${tool} model ID or supported alias`);
+      if (!validModel(tool, model)) throw new Error(`config.models.${tool}.${role}: expected a native ${tool} model ID or supported alias`);
       config.models[tool][role] = model;
     }
   }
@@ -63,6 +66,14 @@ export async function assertNoSymlinks(p) {
 function contained(root, candidate) {
   const relative = path.relative(root, candidate);
   return relative === '' || (!relative.startsWith('..' + path.sep) && relative !== '..' && !path.isAbsolute(relative));
+}
+async function physicalPath(candidate) {
+  try { return await realpath(candidate); }
+  catch (error) {
+    if (error.code !== 'ENOENT' || path.dirname(candidate) === candidate) throw error;
+    // Canonicalize existing ancestors even when the destination has not been created yet.
+    return path.join(await physicalPath(path.dirname(candidate)), path.basename(candidate));
+  }
 }
 async function assets(root) {
   const map = new Map();
@@ -138,7 +149,10 @@ export function validateFiles(files) {
       const metadata = frontmatter(content, name);
       for (const field of ['name','description']) if (typeof metadata[field] !== 'string' || !metadata[field].trim()) throw new Error(`${name}: missing ${field}`);
       if (name.endsWith('SKILL.md') && metadata.name !== path.posix.basename(path.posix.dirname(name))) throw new Error(`${name}: skill name does not match directory`);
-      if (name.startsWith('.claude/agents/') && (!metadata.model || /^gpt-/.test(metadata.model))) throw new Error(`${name}: invalid Claude model`);
+      if (name.startsWith('.claude/agents/')) {
+        if (metadata.name !== path.posix.basename(name, '.md')) throw new Error(`${name}: agent name does not match filename`);
+        if (!validModel('claude', metadata.model)) throw new Error(`${name}: invalid Claude model`);
+      }
     }
     if (name.endsWith('.toml')) {
       const metadata = parseToml(content);
@@ -157,9 +171,10 @@ export function validateFiles(files) {
 export async function exportCore({ output, tools, config, root = sourceRoot, write = writeFile }) {
   if (typeof output !== 'string' || !output.trim()) throw new Error('output: required empty destination');
   if (output.split(/[\\/]/).includes('..')) throw new Error('output: path traversal is not allowed');
-  const destination = path.resolve(output);
-  await assertNoSymlinks(destination);
-  if (contained(root, destination)) throw new Error('output: must be outside the source checkout');
+  const requestedDestination = path.resolve(output);
+  await assertNoSymlinks(requestedDestination);
+  const destination = await physicalPath(requestedDestination);
+  if (contained(await realpath(root), destination)) throw new Error('output: must be outside the source checkout');
   const state = await statIfExists(destination);
   if (state && (!state.isDirectory() || (await readdir(destination)).length)) throw new Error(`${destination}: destination must be new or empty`);
   const files = await buildExport({tools,config,root});
