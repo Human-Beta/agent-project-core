@@ -6,9 +6,9 @@ Version 0.1.0 provides shared delivery, engineering, and verification guidance; 
 
 ## Status
 
-Structural validation, exporter tests, and all nine native workflow cases plus discovery/delegation smoke checks are complete for both profiles. Native access was repaired by selecting the newer bundled Codex client and renewing Claude's OAuth login. Explicit client/model visibility limits remain documented. The 14-task implementation checklist is complete. Independent PR review identified source-path case alias and Claude metadata validation defects; both have regression coverage and corrections awaiting reviewer confirmation. Final owner acceptance remains pending, so the change is not accepted or archived.
+The initial 0.1.0 change was accepted and archived on 2026-10-28 following the owner's archive request. All 14 implementation tasks are complete; independent PR review confirmed both reported defects were corrected, and verification passes 23 tests on macOS. Both native profiles completed all nine workflow cases plus discovery/delegation smoke checks. Explicit client/model visibility limits remain documented.
 
-See [usage](docs/usage.md), [latest evidence](evaluations/evidence/2026-10-13.md), [evaluation procedure](evaluations/README.md), and the [implementation checklist](openspec/changes/create-agent-project-core/tasks.md). The [proposal](openspec/changes/create-agent-project-core/proposal.md), [design](openspec/changes/create-agent-project-core/design.md), and [acceptance scenarios](openspec/changes/create-agent-project-core/specs/) remain planning sources until acceptance.
+See [usage](docs/usage.md), [native evidence](evaluations/evidence/2026-10-13.md), [evaluation procedure](evaluations/README.md), and [follow-up PR review](https://github.com/Human-Beta/agent-project-core/pull/3#pullrequestreview-5660487632). Accepted behavior is maintained in the [agent-delivery specification](openspec/specs/agent-delivery/spec.md) and [core-distribution specification](openspec/specs/core-distribution/spec.md). The [implementation checklist](openspec/changes/archive/2026-10-28-create-agent-project-core/tasks.md), [proposal](openspec/changes/archive/2026-10-28-create-agent-project-core/proposal.md), and [design](openspec/changes/archive/2026-10-28-create-agent-project-core/design.md) are preserved as historical change artifacts.
 
 ## Export
 

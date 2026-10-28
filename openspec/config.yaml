@@ -4,8 +4,8 @@ context: |
   agent-project-core is a standalone, stack-independent foundation for agent-assisted development across projects.
   This repository owns shared guidance, reusable skills, native Codex/Claude adapters, and a bounded way to export them for project templates.
   The initial core change excludes stack templates, automated update PRs, adoption in existing applications, and real deployment.
-  Core guidance, skills, native adapters, and the exporter are implemented under the active initial-core change.
-  Accepted capability specs remain empty until required gates and owner acceptance permit synchronization/archive.
+  The initial 0.1.0 core change is accepted and archived; guidance, skills, native adapters, and the exporter are implemented.
+  Accepted behavior is maintained in openspec/specs/agent-delivery and openspec/specs/core-distribution; change artifacts are preserved under openspec/changes/archive.
   Use the pinned local CLI through pnpm exec openspec. Run pnpm verify before publishing a planning batch.
 rules:
   proposal:
